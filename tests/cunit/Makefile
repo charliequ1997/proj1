@@ -2,7 +2,7 @@ CUNIT = -L/home/ff/cs61c/cunit/install/lib -I/home/ff/cs61c/cunit/install/includ
 
 
 build: test.h test.c ../../utils.c ../../utils.h ../../string-helpers.h ../../string-helpers.c
-	gcc -g test.c ../../utils.c ../../string-helpers.c -o unit-tests $(CUNIT)
+	gcc -std=c99 -g test.c ../../utils.c ../../string-helpers.c -o unit-tests $(CUNIT)
 
 run:
 	./unit-tests
