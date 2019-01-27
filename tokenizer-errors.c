@@ -24,7 +24,7 @@ int generate_generic_error(Token** t,
   int err_len = 1;
   int search = 1;
   while (start + err_len < size && search) {
-    if (is_space(buffer[start + err_len])) {
+    if (!is_space(buffer[start + err_len])) {
       err_len++;
     } else {
       search = 0;
