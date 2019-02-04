@@ -28,7 +28,6 @@ int generate_generic_error(Token** t,
       err_len++;
     } else {
       search = 0;
-      err_len++;
       /* Create an error token. */
       for (int j = 0; j < err_len; j++) {
         token_contents[j] = buffer[start + j];
@@ -80,7 +79,9 @@ int generate_character_error(Token** t,
       err_len++;
     } else {
       search = 0;
-      err_len++;
+      if (buffer[start + err_len] != '\n') {
+        err_len++;
+      }
       /* Create an error token. */
       for (int j = 0; j < err_len; j++) {
         token_contents[j] = buffer[start + j];
@@ -132,7 +133,9 @@ int generate_string_error(Token** t,
       err_len++;
     } else {
       search = 0;
-      err_len++;
+      if (buffer[start + err_len] != '\n') {
+        err_len++;
+      }
       /* create an error token. */
       for (int j = 0; j < err_len; j++) {
         token_contents[j] = buffer[start + j];
