@@ -279,11 +279,14 @@ size_t SelectToken(char* buffer,
     t->linenum = *linenum;
     t->type = TOKEN_SYM_SEMICOLON;
   } else if (buffer[size_read] == '#') {  // #include /s* "string" or error
-    if (strlen(PREPROCESSOR_PRAGMA) + size_read >= size) {
-      return size_read;
+    int match = 1;
+    int i = 0;
+    for (i = 0; i < strlen (PREPROCESSOR_PRAGMA) && size_read + i < size; i++) {
+      if (buffer[size_read + i] != PREPROCESSOR_PRAGMA[i]) {
+        match = 0;
+	      break;
+      }
     }
-    int match = strncmp(buffer + size_read, PREPROCESSOR_PRAGMA,
-                        strlen(PREPROCESSOR_PRAGMA)) == 0;
     size_t str_len = 0;
     if (match) {
       str_len = strlen(PREPROCESSOR_PRAGMA);
