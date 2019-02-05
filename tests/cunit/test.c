@@ -117,17 +117,6 @@ int main() {
                                  {"Test esc chars", testISDIGIT_EscChars},
                                  {"Test numbers", testISDIGIT_Integers},
                                  CU_TEST_INFO_NULL};
-
-  CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
-                           isdigit_tests}, {"is_alpha testing", init_suite1, clean_suite1, isalpha_tests},
-                           {"is_space testing", init_suite1, clean_suite1,
-                                                        isspace_tests},
-                           {"is_identifiercomponent testing", init_suite1, clean_suite1,
-                                                          isidentifiercomponent_tests},
-                           {"is_valididentifier testing", init_suite1, clean_suite1,
-                                                            isvalididentifier_tests},
-                           CU_SUITE_INFO_NULL};
-
   CU_TestInfo isalpha_tests[] = {{"Test actual alpha", testISALPHA_Alpha},
                                    {"Test alpha", testISALPHA_Integer},
                                    {"Test alpha", testISALPHA_Str},
@@ -147,6 +136,18 @@ int main() {
                                        {"Test valididentifier", testISVALIDIDENTIFIER_Not},
                                        {"Test valididentifier", testISVALIDIDENTIFIER_Str},
                                        CU_TEST_INFO_NULL};
+
+  CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
+                           isdigit_tests}, {"is_alpha testing", init_suite1, clean_suite1, isalpha_tests},
+                           {"is_space testing", init_suite1, clean_suite1,
+                                                        isspace_tests},
+                           {"is_identifiercomponent testing", init_suite1, clean_suite1,
+                                                          isidentifiercomponent_tests},
+                           {"is_valididentifier testing", init_suite1, clean_suite1,
+                                                            isvalididentifier_tests},
+                           CU_SUITE_INFO_NULL};
+
+
   /* initialize the CUnit test registry */
   if (CUE_SUCCESS != CU_initialize_registry())
     return CU_get_error();
