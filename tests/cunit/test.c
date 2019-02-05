@@ -145,7 +145,7 @@ int main() {
                                      {"Test identifiercomponent", testISIDENTIFIERCOMPONENT_Symbol},
                                      CU_TEST_INFO_NULL};
 
-  CU_SuiteInfo isvalididentifier_suites[] = {{"is_identifiercomponent testing", init_suite1, clean_suite1,
+  CU_SuiteInfo isidentifiercomponent_suites[] = {{"is_identifiercomponent testing", init_suite1, clean_suite1,
                                isidentifiercomponent_tests},
                                CU_SUITE_INFO_NULL};
 
