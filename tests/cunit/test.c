@@ -55,9 +55,9 @@ void testISDIGIT_EscChars(void) {
 }
 
 void testISALPHA_Str(void) {
-    CU_ASSERT_FALSE(is_alpha(a));
-    CU_ASSERT_FALSE(is_alpha(b));
-    CU_ASSERT_FALSE(is_alpha(c));
+    CU_ASSERT_FALSE(is_alpha(4));
+    CU_ASSERT_FALSE(is_alpha(5));
+    CU_ASSERT_FALSE(is_alpha(6));
 }
 
 void testISALPHA_Integer(void) {
@@ -81,7 +81,7 @@ void testISSPACE_Digit(void) {
 }
 
 void testISSPACE_Str(void) {
-    CU_ASSERT_FALSE(is_space(a));
+    CU_ASSERT_FALSE(is_space('$'));
 }
 
 void testISIDENTIFIERCOMPONENT_Space(void) {
@@ -145,7 +145,7 @@ int main() {
                                      {"Test identifiercomponent", testISIDENTIFIERCOMPONENT_Symbol},
                                      CU_TEST_INFO_NULL};
 
-  CU_SuiteInfo isspace_suites[] = {{"is_identifiercomponent testing", init_suite1, clean_suite1,
+  CU_SuiteInfo isvalididentifier_suites[] = {{"is_identifiercomponent testing", init_suite1, clean_suite1,
                                isidentifiercomponent_tests},
                                CU_SUITE_INFO_NULL};
 
