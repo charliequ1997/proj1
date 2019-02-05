@@ -119,7 +119,13 @@ int main() {
                                  CU_TEST_INFO_NULL};
 
   CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
-                           isdigit_tests},
+                           isdigit_tests}, {"is_alpha testing", init_suite1, clean_suite1, isalpha_tests},
+                           {"is_space testing", init_suite1, clean_suite1,
+                                                        isspace_tests},
+                           {"is_identifiercomponent testing", init_suite1, clean_suite1,
+                                                          isidentifiercomponent_tests},
+                           {"is_valididentifier testing", init_suite1, clean_suite1,
+                                                            isvalididentifier_tests},
                            CU_SUITE_INFO_NULL};
 
   CU_TestInfo isalpha_tests[] = {{"Test actual alpha", testISALPHA_Alpha},
@@ -127,36 +133,20 @@ int main() {
                                    {"Test alpha", testISALPHA_Str},
                                    CU_TEST_INFO_NULL};
 
-  CU_SuiteInfo isalpha_suites[] = {{"is_alpha testing", init_suite1, clean_suite1,
-                             isalpha_tests},
-                             CU_SUITE_INFO_NULL};
-
   CU_TestInfo isspace_tests[] = {{"Test actual space", testISSPACE_Digit},
                                    {"Test space", testISSPACE_Space},
                                    {"Test space", testISSPACE_Str},
                                    CU_TEST_INFO_NULL};
-
-  CU_SuiteInfo isspace_suites[] = {{"is_space testing", init_suite1, clean_suite1,
-                             isspace_tests},
-                             CU_SUITE_INFO_NULL};
 
   CU_TestInfo isidentifiercomponent_tests[] = {{"Test actual identifiercomponent", testISIDENTIFIERCOMPONENT_Identifier},
                                      {"Test identifiercomponent", testISIDENTIFIERCOMPONENT_Space},
                                      {"Test identifiercomponent", testISIDENTIFIERCOMPONENT_Symbol},
                                      CU_TEST_INFO_NULL};
 
-  CU_SuiteInfo isidentifiercomponent_suites[] = {{"is_identifiercomponent testing", init_suite1, clean_suite1,
-                               isidentifiercomponent_tests},
-                               CU_SUITE_INFO_NULL};
-
   CU_TestInfo isvalididentifier_tests[] = {{"Test actual valididentifier", testISVALIDIDENTIFIER_False},
                                        {"Test valididentifier", testISVALIDIDENTIFIER_Not},
                                        {"Test valididentifier", testISVALIDIDENTIFIER_Str},
                                        CU_TEST_INFO_NULL};
-
-  CU_SuiteInfo isvalididentifier_suites[] = {{"is_valididentifier testing", init_suite1, clean_suite1,
-                                 isvalididentifier_tests},
-                                 CU_SUITE_INFO_NULL};
   /* initialize the CUnit test registry */
   if (CUE_SUCCESS != CU_initialize_registry())
     return CU_get_error();
