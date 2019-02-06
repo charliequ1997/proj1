@@ -118,9 +118,9 @@ int main() {
                                  {"Test numbers", testISDIGIT_Integers},
                                  CU_TEST_INFO_NULL};
   CU_TestInfo isalpha_tests[] = {{"Test actual alpha", testISALPHA_Alpha},
-                                   {"Test alpha", testISALPHA_Integer},
-                                   {"Test alpha", testISALPHA_Str},
-                                   CU_TEST_INFO_NULL};
+                                 {"Test alpha", testISALPHA_Integer},
+                                 {"Test", testISALPHA_Str},
+                                 CU_TEST_INFO_NULL};
 
 
   CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
