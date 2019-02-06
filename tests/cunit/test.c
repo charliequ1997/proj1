@@ -67,9 +67,9 @@ void testISALPHA_Integer(void) {
 }
 
 void testISALPHA_Alpha(void) {
-    CU_ASSERT_FALSE(is_alpha('a'));
-    CU_ASSERT_TRUE(is_alpha('b'));
-    CU_ASSERT_TRUE(is_alpha('c'));
+    CU_ASSERT_FALSE(is_alpha(' '));
+    CU_ASSERT_FALSE(is_alpha(' '));
+    CU_ASSERT_FALSE(is_alpha(' '));
 }
 
 void testISSPACE_Space(void) {
