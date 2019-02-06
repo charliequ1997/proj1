@@ -118,22 +118,22 @@ int main() {
                                  {"Test numbers", testISDIGIT_Integers},
                                  CU_TEST_INFO_NULL};
   CU_TestInfo isalpha_tests[] = {{"Test actual alpha", testISALPHA_Alpha},
-                                   {"Test alpha", testISALPHA_Integer},
-                                   {"Test alpha", testISALPHA_Str},
-                                   CU_TEST_INFO_NULL};
+                                 {"Test alphahj", testISALPHA_Integer},
+                                 {"Test alpha", testISALPHA_Str},
+                                 CU_TEST_INFO_NULL};
 
   CU_TestInfo isspace_tests[] = {{"Test actual space", testISSPACE_Digit},
-                                   {"Test space", testISSPACE_Space},
-                                   {"Test space", testISSPACE_Str},
-                                   CU_TEST_INFO_NULL};
+                                 {"Test spacejh", testISSPACE_Space},
+                                 {"Test space", testISSPACE_Str},
+                                 CU_TEST_INFO_NULL};
 
   CU_TestInfo isidentifiercomponent_tests[] = {{"Test actual identifiercomponent", testISIDENTIFIERCOMPONENT_Identifier},
-                                     {"Test identifiercomponent", testISIDENTIFIERCOMPONENT_Space},
+                                     {"Test identifiercomponentiugu", testISIDENTIFIERCOMPONENT_Space},
                                      {"Test identifiercomponent", testISIDENTIFIERCOMPONENT_Symbol},
                                      CU_TEST_INFO_NULL};
 
   CU_TestInfo isvalididentifier_tests[] = {{"Test actual valididentifier", testISVALIDIDENTIFIER_False},
-                                       {"Test valididentifier", testISVALIDIDENTIFIER_Not},
+                                       {"Test valididentifierjhg", testISVALIDIDENTIFIER_Not},
                                        {"Test valididentifier", testISVALIDIDENTIFIER_Str},
                                        CU_TEST_INFO_NULL};
 
