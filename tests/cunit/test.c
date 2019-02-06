@@ -121,15 +121,12 @@ int main() {
                                  {"Test alpha", testISALPHA_Integer},
                                  {"Test", testISALPHA_Str},
                                  CU_TEST_INFO_NULL};
-  CU_TestInfo isspace_tests[] = {{"Test actual space", testISSPACE_Digit},
-                                 {"Test space", testISSPACE_Space},
-                                 {"Test space", testISSPACE_Str},
+  CU_TestInfo isspace_tests[] = {{"Test actual space", testISSPACE_Digit}, {"Test space", testISSPACE_Space}, {"Test space", testISSPACE_Str},
                                    CU_TEST_INFO_NULL};
 
 
   CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
-                           isdigit_tests}, {"Tets", init_suite1, clean_suite1, isalpha_tests},
-                           {"is_space testing", init_suite1, clean_suite1, isspace_tests},
+                           isdigit_tests}, {"Tets", init_suite1, clean_suite1, isalpha_tests}, {"is_space testing", init_suite1, clean_suite1, isspace_tests},
                            CU_SUITE_INFO_NULL};
 
 
