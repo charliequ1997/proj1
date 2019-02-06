@@ -89,7 +89,7 @@ void testISIDENTIFIERCOMPONENT_Space(void) {
 }
 
 void testISIDENTIFIERCOMPONENT_Identifier(void) {
-    CU_ASSERT_TRUE(is_identifier_component('a'));
+    CU_ASSERT_FALSE(is_identifier_component('a'));
 }
 
 void testISIDENTIFIERCOMPONENT_Symbol(void) {
