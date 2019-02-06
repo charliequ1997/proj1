@@ -55,9 +55,9 @@ void testISDIGIT_EscChars(void) {
 }
 
 void testISALPHA_Str(void) {
-    CU_ASSERT_FALSE(is_alpha(4));
-    CU_ASSERT_FALSE(is_alpha(5));
-    CU_ASSERT_FALSE(is_alpha(6));
+    CU_ASSERT_TRUE(is_alpha('a'));
+    CU_ASSERT_TRUE(is_alpha('d'));
+    CU_ASSERT_TRUE(is_alpha('z'));
 }
 
 void testISALPHA_Integer(void) {
@@ -74,39 +74,56 @@ void testISALPHA_Alpha(void) {
 
 void testISSPACE_Space(void) {
     CU_ASSERT_TRUE(is_space(' '));
-
+    CU_ASSERT_TRUE(is_space(' '));
+    CU_ASSERT_TRUE(is_space(' '));
 }
 
 void testISSPACE_Digit(void) {
     CU_ASSERT_FALSE(is_space('2'));
+    CU_ASSERT_FALSE(is_space('3'));
+    CU_ASSERT_FALSE(is_space('4'));
 }
 
 void testISSPACE_Str(void) {
     CU_ASSERT_FALSE(is_space('$'));
+    CU_ASSERT_FALSE(is_space('('));
+    CU_ASSERT_FALSE(is_space(')'));
 }
 
 void testISIDENTIFIERCOMPONENT_Space(void) {
     CU_ASSERT_FALSE(is_identifier_component(' '));
+    CU_ASSERT_FALSE(is_identifier_component('*'));
+    CU_ASSERT_FALSE(is_identifier_component('^'));
 }
 
 void testISIDENTIFIERCOMPONENT_Identifier(void) {
-    CU_ASSERT_FALSE(is_identifier_component('a'));
+    CU_ASSERT_TRUE(is_identifier_component('a'));
+    CU_ASSERT_TRUE(is_identifier_component('1'));
+    CU_ASSERT_TRUE(is_identifier_component('_'));
 }
 
 void testISIDENTIFIERCOMPONENT_Symbol(void) {
     CU_ASSERT_FALSE(is_identifier_component('&'));
+    CU_ASSERT_FALSE(is_identifier_component(' '));
+    CU_ASSERT_FALSE(is_identifier_component('('));
 }
 
 void testISVALIDIDENTIFIER_Str(void) {
-    CU_ASSERT_FALSE(is_valid_identifier('&'));
+    CU_ASSERT_FALSE(is_valid_identifier("&"));
+    CU_ASSERT_FALSE(is_valid_identifier("*"));
+    CU_ASSERT_FALSE(is_valid_identifier("^"));
 }
 
 void testISVALIDIDENTIFIER_Not(void) {
     CU_ASSERT_TRUE(is_valid_identifier("abc"));
+    CU_ASSERT_TRUE(is_valid_identifier("a90"));
+    CU_ASSERT_TRUE(is_valid_identifier("z_8"));
 }
 
 void testISVALIDIDENTIFIER_False(void) {
-    CU_ASSERT_FALSE(is_valid_identifier('@'));
+    CU_ASSERT_FALSE(is_valid_identifier("1"));
+    CU_ASSERT_FALSE(is_valid_identifier(" "));
+    CU_ASSERT_FALSE(is_valid_identifier("4"));
 }
 
 /* The main() function for setting up and running the tests.
