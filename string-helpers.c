@@ -76,7 +76,7 @@ int replace_escape_in_string(char* str) {
 */
 int is_alpha(char c) {
   /* YOUR CODE HERE */
-  if ('a' < c && c < 'z') {
+  if ('a' <= c && c <= 'z') {
     return 1;
   }
   return 0;
