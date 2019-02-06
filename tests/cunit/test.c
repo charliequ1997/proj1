@@ -74,6 +74,7 @@ void testISALPHA_Alpha(void) {
 
 void testISSPACE_Space(void) {
     CU_ASSERT_TRUE(is_space(' '));
+
 }
 
 void testISSPACE_Digit(void) {
