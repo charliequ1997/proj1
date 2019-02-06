@@ -117,9 +117,14 @@ int main() {
                                  {"Test esc chars", testISDIGIT_EscChars},
                                  {"Test numbers", testISDIGIT_Integers},
                                  CU_TEST_INFO_NULL};
+  CU_TestInfo isalpha_tests[] = {{"Test actual alpha", testISALPHA_Alpha},
+                                   {"Test alpha", testISALPHA_Integer},
+                                   {"Test alpha", testISALPHA_Str},
+                                   CU_TEST_INFO_NULL};
+
 
   CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
-                           isdigit_tests},
+                           isdigit_tests}, {"Tets", init_suite1, clean_suite1, isalpha_tests},
                            CU_SUITE_INFO_NULL};
 
 
