@@ -179,7 +179,7 @@ int main() {
                                        {"Test valididentifier", testStrConcat3},
                                           CU_TEST_INFO_NULL};
   CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
-                           isdigit_tests}, {"is_alpha testing", init_suite1, clean_suite1, isalpha_tests}, {"is_space testing", init_suite1, clean_suite1, isspace_tests}, {"is_identifiercomponent testing", init_suite1, clean_suite1, isidentifiercomponent_tests}, {"is_valididentifier testing", init_suite1, clean_suite1, isvalididentifier_tests}, {"strconcat", init_suite1, clean_suite1, isstrconcat_tests}CU_SUITE_INFO_NULL};
+                           isdigit_tests}, {"is_alpha testing", init_suite1, clean_suite1, isalpha_tests}, {"is_space testing", init_suite1, clean_suite1, isspace_tests}, {"is_identifiercomponent testing", init_suite1, clean_suite1, isidentifiercomponent_tests}, {"is_valididentifier testing", init_suite1, clean_suite1, isvalididentifier_tests}, {"strconcat", init_suite1, clean_suite1, isstrconcat_tests}, CU_SUITE_INFO_NULL};
 
 
   /* initialize the CUnit test registry */
