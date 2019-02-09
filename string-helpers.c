@@ -148,13 +148,12 @@ int is_valid_identifier(char* str) {
 char* str_concat(char** strings, size_t count) {
   /* YOUR CODE HERE */
   int size = 1;
-  char *cht;
   for (int i = 0; i < count; i++) {
     for (int k = 0; k < strlen(*(strings + i)); k++) {
       size = size + 1;
     }
   }
-  cht = (char*) malloc(size);
+  char *cht = (char*) malloc(size);
   cht[0] = '\0';
   for (int m = 0; m < count; m++) {
     cht = strcat(cht, *(strings + m));

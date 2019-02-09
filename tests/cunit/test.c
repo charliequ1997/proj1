@@ -129,7 +129,7 @@ void testISVALIDIDENTIFIER_False(void) {
 
 void testStrConcat1(void) {
     char* output = "I hate and want to drop 61c";
-    char* strings[5] = {"I hate ", "and", "want", "to drop", "61c"};
+    char* strings[5] = {"I hate ", "and ", "want ", "to drop ", "61c"};
     CU_ASSERT_STRING_EQUAL(str_concat(strings, 5), output);
 }
 
