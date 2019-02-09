@@ -126,6 +126,25 @@ void testISVALIDIDENTIFIER_False(void) {
     CU_ASSERT_FALSE(is_valid_identifier("4"));
 }
 
+
+void testStrConcat1(void) {
+    char* output = "I hate and want to drop 61c";
+    char* strings[5] = {"I hate ", "and", "want", "to drop", "61c"};
+    CU_ASSERT_STRING_EQUAL(str_concat(strings, 5), output);
+}
+
+void testStrConcat2(void) {
+    char* output = "I am myself";
+    char* strings[3] = {"I ", "am ", "myself"};
+    CU_ASSERT_STRING_EQUAL(str_concat(strings, 3), output);
+}
+
+void testStrConcat3(void) {
+    char* output = "I love russell westbrook";
+    char* strings[4] = {"I ", "love ", "russell ","westbrook"};
+    CU_ASSERT_STRING_EQUAL(str_concat(strings, 4), output);
+}
+
 /* The main() function for setting up and running the tests.
  * Returns a CUE_SUCCESS on successful running, another
  * CUnit error code on failure.
@@ -155,8 +174,12 @@ int main() {
                                        {"Test valididentifier", testISVALIDIDENTIFIER_Str},
                                        CU_TEST_INFO_NULL};
 
+  CU_TestInfo isstrconcat_tests[] = {{"Test actual valididentifier", testStrConcat1},
+                                       {"Test valididentifierjhg", testStrConcat2},
+                                       {"Test valididentifier", testStrConcat3},
+                                          CU_TEST_INFO_NULL};
   CU_SuiteInfo suites[] = {{"is_digit testing", init_suite1, clean_suite1,
-                           isdigit_tests}, {"is_alpha testing", init_suite1, clean_suite1, isalpha_tests}, {"is_space testing", init_suite1, clean_suite1, isspace_tests}, {"is_identifiercomponent testing", init_suite1, clean_suite1, isidentifiercomponent_tests}, {"is_valididentifier testing", init_suite1, clean_suite1, isvalididentifier_tests}, CU_SUITE_INFO_NULL};
+                           isdigit_tests}, {"is_alpha testing", init_suite1, clean_suite1, isalpha_tests}, {"is_space testing", init_suite1, clean_suite1, isspace_tests}, {"is_identifiercomponent testing", init_suite1, clean_suite1, isidentifiercomponent_tests}, {"is_valididentifier testing", init_suite1, clean_suite1, isvalididentifier_tests}, {"strconcat", init_suite1, clean_suite1, isstrconcat_tests}CU_SUITE_INFO_NULL};
 
 
   /* initialize the CUnit test registry */
