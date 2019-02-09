@@ -179,6 +179,7 @@ int ProcessFileIncludes(StringDLL** node_ptr,
   }
   fclose(f);
   *node_ptr = node->prev;
+  free(buffer);
   return 0;
 }
 
