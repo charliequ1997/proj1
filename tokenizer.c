@@ -447,25 +447,39 @@ size_t SelectToken(char* buffer,
         /* Create an int token. Hint: you may find the function strtol helpful
          */
         /* YOUR CODE HERE */
-        for (int i = 0; i < int_len; i++) {
-          token_contents[i] = buffer[size_read + i];
-        }
-        token_contents[int_len] = '\0';
+
         /* FIXME IM NOT CORRECT. */
-        if (token_contents[0] == '0' && int_len != 1) {
-          int total = generate_string_error(&t, buffer, size_read, size, *linenum,
-                                            filename);
-          if (total == 0) {
-            return size_read;
+        if (buffer[size_read] == '0') {
+          if (int_len == 1) {
+            char tempp[int_len];
+            char *temp;
+            for (int i = 0; i < int_len; i ++) {
+              tempp[i] = buffer[size_read + i];
+            }
+            t = create_token(filename);
+            t->data.integer = strtol(tempp, &temp, 10);
+            t->linenum = *linenum;
+            t->type = TOKEN_INTEGER;
+            size_read += int_len;
           } else {
-            size_read += total;
+            int total = generate_string_error(&t, buffer, size_read, size, *linenum, filename);
+            if (total == 0) {
+              return size_read;
+            } else {
+              size_read += total;
+            }
           }
         } else {
-          size_read += int_len;
+          char tempp[int_len];
+          char *temp;
+          for (int i = 0; i < int_len; i ++) {
+            tempp[i] = buffer[size_read + i];
+          }
           t = create_token(filename);
+          t->data.integer = strtol(tempp, &temp, 10);
           t->linenum = *linenum;
-          t->data.integer = strtol(token_contents, NULL, 10);
           t->type = TOKEN_INTEGER;
+          size_read += int_len;
         }
       }
     }
