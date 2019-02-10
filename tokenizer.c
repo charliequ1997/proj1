@@ -358,33 +358,32 @@ size_t SelectToken(char* buffer,
 
     /* YOUR CODE HERE */
     if ((size_read + 2 >= size) || (size_read + 3 >= size) || (size_read + 4 >= size)) {
-      return size_read;
+        return size_read;
     }
-    if (isprint(buffer[size_read + 1]) && buffer[size_read + 2] == '\'') {
-      t = create_token(filename);
-      t->linenum = *linenum;
-      t->type = TOKEN_CHARACTER;
-      t->data.character = buffer[size_read + 1];
-      size_read += 3;
-    } else if (replace_escape_in_character(size_read + buffer + 1) != -1 && buffer[size_read + 3] == '\'') {
-      t = create_token(filename);
-      t->linenum = *linenum;
-      t->type = TOKEN_CHARACTER;
-      t->data.character = replace_escape_in_character(size_read + buffer + 1);
-      size_read += 4;
-    } else {
-    /* FIXME IM NOT CORRECT. */
 
-    int total =
-        generate_string_error(&t, buffer, size_read, size, *linenum, filename);
-    if (total == 0) {
-      return size_read;
+    if (buffer[size_read + 2] == '\'' && isprint(buffer[size_read + 1])){
+        t = create_token(filename);
+        t->linenum = *linenum;
+        t->type = TOKEN_CHARACTER;
+        t->data.character = buffer[size_read + 1];
+        size_read += 3;
+    } else if (buffer[size_read + 3] == '\'' && replace_escape_in_character(buffer + size_read + 1) != -1) {
+        int result = replace_escape_in_character(buffer + size_read + 1);
+        t = create_token(filename);
+        t->linenum = *linenum;
+        t->type = TOKEN_CHARACTER;
+        t->data.character = result;
+        size_read += 4;
     } else {
-      size_read += total;
-    }
+          int total =
+              generate_character_error(&t, buffer, size_read, size, *linenum, filename);
+          if (total == 0) {
+            return size_read;
+          } else {
+            size_read += total;
+      }
   }
-
-  } else if (buffer[size_read] == '"') {  // strings and some errors
+} else if (buffer[size_read] == '"') {  // strings and some errors
     size_t str_len = 1;
     int search = 1;
     while (size_read + str_len < size && search) {
