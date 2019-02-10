@@ -144,22 +144,20 @@ size_t SelectToken(char* buffer,
     t->linenum = *linenum;
     size_read++;
   } else if (buffer[size_read] == '/') {  // / and comments
-    if (size_read + 1 >= size) {
+    if (size_read + 1 == size) {
       return size_read;
     }
-    size_read++;
     if (buffer[size_read + 1] == '/') {
       /* YOUR CODE HERE*/
       IS_COMMENT = 1;
-      while(buffer[size_read] != '\n') {
-        if (size_read + 1 != size) {
-          size_read++;
+      while(size_read < size) {
+        if (buffer[size_read] == '\n') {
+          IS_COMMENT = 0;
+          (*linenum)++;
         } else {
-          return size_read;
+          size_read++;
         }
       }
-      IS_COMMENT = 0;
-      (*linenum)++;
       return size_read;
     } else {
       t = create_token(filename);
