@@ -155,7 +155,7 @@ char* str_concat(char** strings, size_t count) {
   strcpy(temp, *strings);
   for (size_t i = 1; i < count; i++) {
     temp = (char *) realloc(temp, strlen(strings[i]) + strlen(temp) + 1);
-    strcat(str, strings[i]);
+    strcat(temp, strings[i]);
   }
   return temp;
 }
