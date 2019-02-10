@@ -463,7 +463,7 @@ size_t SelectToken(char* buffer,
             size_read += int_len;
           } else {
             int total = generate_string_error(&t, buffer, size_read, size, *linenum, filename);
-            if (total == 0) {
+            if (total == 0) { 
               return size_read;
             } else {
               size_read += total;
