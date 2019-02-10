@@ -143,8 +143,8 @@ size_t SelectToken(char* buffer,
     t->type = TOKEN_SYM_TIMES;
     t->linenum = *linenum;
     size_read++;
-  } else if (buffer[size_read] == '/' || IS_COMMENT) {  // / and comments
-    if (size_read + 1 == size) {
+  } else if (buffer[size_read] == '/') {  // / and comments
+    if (size_read + 1 >= size) {
       return size_read;
     }
     size_read++;
@@ -162,10 +162,10 @@ size_t SelectToken(char* buffer,
       (*linenum)++;
       return size_read;
     } else {
-      size_read++;
       t = create_token(filename);
       t->type = TOKEN_SYM_SLASH;
       t->linenum = *linenum;
+      size_read++;
     }
   } else if (buffer[size_read] == '=') {  // = and ==
     if (size_read + 1 == size) {
