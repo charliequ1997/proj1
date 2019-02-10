@@ -150,7 +150,7 @@ size_t SelectToken(char* buffer,
     if (buffer[size_read + 1] == '/') {
       /* YOUR CODE HERE*/
       IS_COMMENT = 1;
-      while(size_read < size) {
+      while(size_read < size && IS_COMMENT) {
         if (buffer[size_read] == '\n') {
           IS_COMMENT = 0;
           (*linenum)++;
