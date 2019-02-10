@@ -143,11 +143,11 @@ size_t SelectToken(char* buffer,
     t->type = TOKEN_SYM_TIMES;
     t->linenum = *linenum;
     size_read++;
-  } else if (buffer[size_read] == '/' || IS_COMMENT) {  // / and comments
+  } else if (buffer[size_read] == '/') {  // / and comments
     if (size_read + 1 >= size) {
       return size_read;
     }
-    if (buffer[size_read + 1] == '/' || IS_COMMENT) {
+    if (buffer[size_read + 1] == '/') {
       /* YOUR CODE HERE*/
       IS_COMMENT = 1;
       while(size_read < size && IS_COMMENT) {
