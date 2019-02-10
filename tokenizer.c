@@ -143,27 +143,28 @@ size_t SelectToken(char* buffer,
     t->type = TOKEN_SYM_TIMES;
     t->linenum = *linenum;
     size_read++;
-  } else if (buffer[size_read] == '/' || IS_COMMENT) {  // / and comments
+  } else if (buffer[size_read] == '/') {  // / and comments
     if (size_read + 1 >= size) {
       return size_read;
     }
-    if (buffer[size_read + 1] == '/' || IS_COMMENT) {
+    size_read++;
+    if (buffer[size_read + 1] == '/') {
       /* YOUR CODE HERE*/
       IS_COMMENT = 1;
-      while(size_read < size && IS_COMMENT) {
-        if (buffer[size_read] == '\n') {
-          IS_COMMENT = 0;
-          (*linenum)++;
-        } else {
-          size_read++;
+      while(buffer[size_read] == '/') {
+        if (size_read + 1 == size) {
+          return size_read;
         }
+        size_read++;
       }
+      IS_COMMENT = 0;
+      (*linenum)++;
       return size_read;
     } else {
+      size_read++;
       t = create_token(filename);
       t->type = TOKEN_SYM_SLASH;
       t->linenum = *linenum;
-      size_read++;
     }
   } else if (buffer[size_read] == '=') {  // = and ==
     if (size_read + 1 == size) {
@@ -357,7 +358,31 @@ size_t SelectToken(char* buffer,
   } else if (buffer[size_read] == '\'') {  // characters and some errors
 
     /* YOUR CODE HERE */
-    
+    if ((size_read + 2 >= size) || (size_read + 3 >= size) || (size_read + 4 >= size)) {
+        return size_read;
+    }
+
+    if (isprint(buffer[size_read + 1]) && buffer[size_read + 2] == '\''){
+        t = create_token(filename);
+        t->linenum = *linenum;
+        t->type = TOKEN_CHARACTER;
+        t->data.character = buffer[size_read + 1];
+        size_read = size_read + 3;
+    } else if (replace_escape_in_character(buffer + size_read + 1) != -1 && buffer[size_read + 3] == '\'') {
+        t = create_token(filename);
+        t->linenum = *linenum;
+        t->type = TOKEN_CHARACTER;
+        t->data.character = replace_escape_in_character(buffer + size_read + 1);
+        size_read = size_read + 4;
+    } else {
+          int total =
+              generate_character_error(&t, buffer, size_read, size, *linenum, filename);
+          if (total == 0) {
+            return size_read;
+          } else {
+            size_read += total;
+      }
+  }
 
   } else if (buffer[size_read] == '"') {  // strings and some errors
     size_t str_len = 1;
