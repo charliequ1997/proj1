@@ -161,8 +161,8 @@ size_t SelectToken(char* buffer,
       return size_read;
     } else {
       t = create_token(filename);
-      t -> type = TOKEN_SYM_SLASH;
-      t -> linenum = *linenum;
+      t->type = TOKEN_SYM_SLASH;
+      t->linenum = *linenum;
       size_read++;
     }
   } else if (buffer[size_read] == '=') {  // = and ==
@@ -362,15 +362,15 @@ size_t SelectToken(char* buffer,
     }
     if (isprint(buffer[size_read + 1]) && buffer[size_read + 2] == '\'') {
       t = create_token(filename);
-      t -> linenum = *linenum;
-      t -> type = TOKEN_CHARACTER;
-      t -> data.charcter = buffer[size_read + 1];
-      size_read = size_read + 3;
+      t->linenum = *linenum;
+      t->type = TOKEN_CHARACTER;
+      t->data.charcter = buffer[size_read + 1];
+      size_read += 3;
     } else if (replace_escape_in_character(size_read + buffer + 1) != -1 && buffer[size_read + 3] == '\'') {
       t = create_token(filename);
-      t -> linenum = *linenum;
-      t -> type = TOKEN_CHARACTER;
-      t -> data.charcter = replace_escape_in_character(size_read + buffer + 1);
+      t->linenum = *linenum;
+      t->type = TOKEN_CHARACTER;
+      t->data.charcter = replace_escape_in_character(size_read + buffer + 1);
       size_read = size_read + 4;
     } else {
     /* FIXME IM NOT CORRECT. */
@@ -464,9 +464,9 @@ size_t SelectToken(char* buffer,
         } else {
           size_read += int_len;
           t = create_token(filename);
-          t -> linenum = *linenum;
-          t -> data.integer = strtol(token_contents, NULL, 10);
-          t -> type = TOKEN_INTEGER;
+          t->linenum = *linenum;
+          t->data.integer = strtol(token_contents, NULL, 10);
+          t->type = TOKEN_INTEGER;
         }
       }
     }
@@ -496,11 +496,12 @@ size_t SelectToken(char* buffer,
           /* Handle identifiers */
           /* YOUR CODE HERE */
           t = create_token(filename);
-          t -> linenum = *linenum;
-          t -> type = TOKEN_IDENTIFIER;
-          t -> data.identifier = malloc(sizeof(char) * id_len + 1);
+          t->linenum = *linenum;
+          t->type = TOKEN_IDENTIFIER;
+          char *ident = malloc(sizeof(char) * id_len + 1);
+          t->data.identifier = ident;
           for (int i = 0; i <= id_len; i++) {
-            t -> data.identifier[i] = token_contents[i];
+            t->data.identifier[i] = token_contents[i];
           }
           size_read = size_read + id_len;
         } else {
