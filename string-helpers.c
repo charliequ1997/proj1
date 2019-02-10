@@ -150,17 +150,12 @@ int is_valid_identifier(char* str) {
 */
 char* str_concat(char** strings, size_t count) {
   /* YOUR CODE HERE */
-  int size = 1;
-  char *cht;
-  for (int i = 0; i < count; i++) {
-    for (int k = 0; k < strlen(*(strings + i)); k++) {
-      size = size + 1;
-    }
+  char *temp;
+  temp = (char *) malloc(strlen(*strings) + 1);
+  strcpy(temp, *strings);
+  for (size_t i = 1; i < count; i++) {
+    temp = (char *) realloc(temp, strlen(strings[i]) + strlen(temp) + 1);
+    strcat(str, strings[i]);
   }
-  cht = (char*) malloc(size);
-  cht[0] = '\0';
-  for (int m = 0; m < count; m++) {
-    cht = strcat(cht, *(strings + m));
-  }
-  return cht;
+  return temp;
 }

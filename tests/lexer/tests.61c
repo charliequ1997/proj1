@@ -1,34 +1,16 @@
-//this is an integration test for project1 by Geping Qu 111111111111111111111111111111111  111111
+//An Integration Test
+//LOL, Test another Comment
+int temp = 12;
+int asdjkakjsdhkj = 0;
+int askjdh_adfgjdshfj_aiuwiast = 129783873264737;
+int kjashdhgjcxzhhgjknxnuuayedgyaisuyusdyg_ausdguietdfytfkhasgJKhgjkzhgcjhzbxjjnkaskjdhasjgchzxvhvchvgasd = 12983;
+char asakjhd= 'z';
+char m = 'm';
+char masoiudoiu = 'y';
+char jkashd_aiis = '\n';
 
-//test for integer
-int my_int_test = 9;
-int my_int_test2 = 0;
+int asdjhk = 0000000;
 
-//test for large integer
-int my_large_int_test = 555555555555555;
+char 0 = 1;
 
-//test for large identifies
-int veryveryveryveryveryveryveryveryveryveryveryveryveryveryveryveryverylongidentifier = 1;
-
-//test for character
-char my_char_test1 = 'z';
-char my_char_test2 = 'm';
-char my_char_test3 = 'y';
-char my_char_test4 = '\n';
-char my_char_test5 = '\t';
-char my_char_test6 = '\';
-char my_test6 = '\0';
-//test for identifiers and comments included in above tests
-
-//test for error-handlig
-
-//test for error int
-int wrong_int = 011;
-
-//test for error identifiers
-int 0wrong_identifier = 1;
-
-//test for error charac
-char wrong_char = '/a';
-char wrong_char1 = '//';
-char wrong_char2 = '/c';
+char klsajdl = 'asdjkh';
