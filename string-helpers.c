@@ -117,7 +117,7 @@ int is_digit(char c) {
 */
 int is_identifier_component(char c) {
   /* YOUR CODE HERE */
-  if (is_alpha(c) || is_digit(c) || c == '_') {
+  if (is_alpha(c) == 1 || is_digit(c) == 1 || c == '_') {
     return 1;
   }
   return 0;
