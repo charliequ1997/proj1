@@ -143,28 +143,27 @@ size_t SelectToken(char* buffer,
     t->type = TOKEN_SYM_TIMES;
     t->linenum = *linenum;
     size_read++;
-  } else if (buffer[size_read] == '/') {  // / and comments
+  } else if (buffer[size_read] == '/' || IS_COMMENT) {  // / and comments
     if (size_read + 1 >= size) {
       return size_read;
     }
-    size_read++;
-    if (buffer[size_read + 1] == '/') {
+    if (buffer[size_read + 1] == '/' || IS_COMMENT) {
       /* YOUR CODE HERE*/
       IS_COMMENT = 1;
-      while(buffer[size_read] == '/') {
-        if (size_read + 1 == size) {
-          return size_read;
+      while(size_read < size && IS_COMMENT) {
+        if (buffer[size_read] == '\n') {
+          IS_COMMENT = 0;
+          (*linenum)++;
+        } else {
+          size_read++;
         }
-        size_read++;
       }
-      IS_COMMENT = 0;
-      (*linenum)++;
       return size_read;
     } else {
-      size_read++;
       t = create_token(filename);
       t->type = TOKEN_SYM_SLASH;
       t->linenum = *linenum;
+      size_read++;
     }
   } else if (buffer[size_read] == '=') {  // = and ==
     if (size_read + 1 == size) {
