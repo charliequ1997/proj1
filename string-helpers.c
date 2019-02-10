@@ -117,7 +117,7 @@ int is_digit(char c) {
 */
 int is_identifier_component(char c) {
   /* YOUR CODE HERE */
-  if (is_alpha(c) || is_digit(c) || c == '_') {
+  if (is_alpha(c) == 1 || is_digit(c) == 1 || c == '_') {
     return 1;
   }
   return 0;
@@ -130,7 +130,7 @@ int is_identifier_component(char c) {
 */
 int is_valid_identifier(char* str) {
   /* YOUR CODE HERE */
-  if (!is_alpha(str[0])) {
+  if (is_alpha(str[0]) == 0) {
     return 0;
   } else {
     for (char *i = str; *i; ++i) {
