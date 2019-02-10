@@ -364,13 +364,13 @@ size_t SelectToken(char* buffer,
       t = create_token(filename);
       t->linenum = *linenum;
       t->type = TOKEN_CHARACTER;
-      t->data.charcter = buffer[size_read + 1];
+      t->data.character = buffer[size_read + 1];
       size_read += 3;
     } else if (replace_escape_in_character(size_read + buffer + 1) != -1 && buffer[size_read + 3] == '\'') {
       t = create_token(filename);
       t->linenum = *linenum;
       t->type = TOKEN_CHARACTER;
-      t->data.charcter = replace_escape_in_character(size_read + buffer + 1);
+      t->data.character = replace_escape_in_character(size_read + buffer + 1);
       size_read = size_read + 4;
     } else {
     /* FIXME IM NOT CORRECT. */
