@@ -148,17 +148,17 @@ size_t SelectToken(char* buffer,
       return size_read;
     }
     if (buffer[size_read + 1] == '/' || IS_COMMENT) {
-      /* YOUR CODE HERE*/
-      IS_COMMENT = 1;
-      while(size_read < size && IS_COMMENT) {
-        if (buffer[size_read] == '\n') {
-          IS_COMMENT = 0;
-          (*linenum)++;
-        } else {
-          size_read++;
+      /* YOUR CODE HERE for comment Done!!!!*/
+        IS_COMMENT = 1;
+        while (IS_COMMENT && size_read < size) {
+            if (buffer[size_read] != '\n') {
+                size_read++;
+            } else {
+                IS_COMMENT = 0;
+                (*linenum)++;
+            }
         }
-      }
-      return size_read;
+        return size_read;
     } else {
       t = create_token(filename);
       t->type = TOKEN_SYM_SLASH;
@@ -356,35 +356,34 @@ size_t SelectToken(char* buffer,
     }
   } else if (buffer[size_read] == '\'') {  // characters and some errors
 
-    /* YOUR CODE HERE */
-    if ((size_read + 2 >= size) || (size_read + 3 >= size) || (size_read + 4 >= size)) {
-      return size_read;
-    }
-    if (isprint(buffer[size_read + 1]) && buffer[size_read + 2] == '\'') {
-      t = create_token(filename);
-      t->linenum = *linenum;
-      t->type = TOKEN_CHARACTER;
-      t->data.charcter = buffer[size_read + 1];
-      size_read += 3;
-    } else if (replace_escape_in_character(size_read + buffer + 1) != -1 && buffer[size_read + 3] == '\'') {
-      t = create_token(filename);
-      t->linenum = *linenum;
-      t->type = TOKEN_CHARACTER;
-      t->data.charcter = replace_escape_in_character(size_read + buffer + 1);
-      size_read = size_read + 4;
-    } else {
-    /* FIXME IM NOT CORRECT. */
+    /* YOUR CODE HERE for character*/
+      if ((size_read + 2 >= size) || (size_read + 3 >= size) || (size_read + 4 >= size)) {
+          return size_read;
+      }
 
-    int total =
-        generate_string_error(&t, buffer, size_read, size, *linenum, filename);
-    if (total == 0) {
-      return size_read;
-    } else {
-      size_read += total;
+      if (buffer[size_read + 2] == '\'' && isprint(buffer[size_read + 1])){
+          t = create_token(filename);
+          t->linenum = *linenum;
+          t->type = TOKEN_CHARACTER;
+          t->data.character = buffer[size_read + 1];
+          size_read += 3;
+      } else if (buffer[size_read + 3] == '\'' && replace_escape_in_character(buffer + size_read + 1) != -1) {
+          int result = replace_escape_in_character(buffer + size_read + 1);
+          t = create_token(filename);
+          t->linenum = *linenum;
+          t->type = TOKEN_CHARACTER;
+          t->data.character = result;
+          size_read += 4;
+      } else {
+            int total =
+                generate_character_error(&t, buffer, size_read, size, *linenum, filename);
+            if (total == 0) {
+              return size_read;
+            } else {
+              size_read += total;
+        }
     }
-  }
-
-  } else if (buffer[size_read] == '"') {  // strings and some errors
+  }else if (buffer[size_read] == '"') {  // strings and some errors
     size_t str_len = 1;
     int search = 1;
     while (size_read + str_len < size && search) {
@@ -447,29 +446,31 @@ size_t SelectToken(char* buffer,
         search = 0;
         /* Create an int token. Hint: you may find the function strtol helpful
          */
-        /* YOUR CODE HERE */
-        for (int i = 0; i < int_len; i++) {
-          token_contents[i] = buffer[size_read + i];
+        for (int j = 0; j < int_len; j++) {
+              token_contents[j] = buffer[size_read + j];
         }
-        token_contents[int_len] = '\0';
+          token_contents[int_len] = '\0';
+        if (int_len != 1 && token_contents[0] == '0') {
+        /* YOUR CODE HERE for integer done!!!!*/
+
         /* FIXME IM NOT CORRECT. */
-        if (token_contents[0] == '0' && int_len != 1) {
-          int total = generate_string_error(&t, buffer, size_read, size, *linenum,
-                                            filename);
-          if (total == 0) {
-            return size_read;
-          } else {
-            size_read += total;
-          }
+
+        int total = generate_generic_error(&t, buffer, size_read, size, *linenum,
+                                          filename);
+        if (total == 0) {
+          return size_read;
+            } else {
+                size_read += total;
+            }
         } else {
-          size_read += int_len;
-          t = create_token(filename);
-          t->linenum = *linenum;
-          t->data.integer = strtol(token_contents, NULL, 10);
-          t->type = TOKEN_INTEGER;
+                size_read += int_len;
+                t = create_token(filename);
+                t->linenum = *linenum;
+                t->data.integer = strtol(token_contents, NULL, 10);
+                t->type = TOKEN_INTEGER;
+            }
+          }
         }
-      }
-    }
     if (search) {
       return size_read;
     }
@@ -494,16 +495,17 @@ size_t SelectToken(char* buffer,
           size_read += id_len;
         } else if (is_valid_identifier(token_contents)) {  // FIX ME
           /* Handle identifiers */
-          /* YOUR CODE HERE */
-          t = create_token(filename);
-          t->linenum = *linenum;
-          t->type = TOKEN_IDENTIFIER;
-          char *ident = malloc(sizeof(char) * id_len + 1);
-          t->data.identifier = ident;
-          for (int i = 0; i <= id_len; i++) {
-            t->data.identifier[i] = token_contents[i];
-          }
-          size_read = size_read + id_len;
+            t = create_token(filename);
+            t->linenum = *linenum;
+            t->type = TOKEN_IDENTIFIER;
+            char* dic = malloc(sizeof(char) * id_len + 1);
+            t->data.identifier = dic;
+            //(char*) malloc(sizeof(char) * id_len);
+            for (int i = 0; i <= id_len; i++) {
+                t->data.identifier[i] = token_contents[i];
+            }
+            size_read += id_len;
+          /* YOUR CODE HERE for indentifiers Done!!!*/
         } else {
           /* Errors */
           int total = generate_generic_error(&t, buffer, size_read, size,
