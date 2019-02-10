@@ -361,12 +361,12 @@ size_t SelectToken(char* buffer,
         return size_read;
     }
 
-    if (buffer[size_read + 2] == '\'' && isprint(buffer[size_read + 1])){
+    if (isprint(buffer[size_read + 1]) && buffer[size_read + 2] == '\''){
         t = create_token(filename);
         t->linenum = *linenum;
         t->type = TOKEN_CHARACTER;
         t->data.character = buffer[size_read + 1];
-        size_read += 3;
+        size_read = size_read + 3;
     } else if (buffer[size_read + 3] == '\'' && replace_escape_in_character(buffer + size_read + 1) != -1) {
         int result = replace_escape_in_character(buffer + size_read + 1);
         t = create_token(filename);
