@@ -150,21 +150,21 @@ size_t SelectToken(char* buffer,
     if (buffer[size_read + 1] == '/' || IS_COMMENT) {
       /* YOUR CODE HERE*/
       IS_COMMENT = 1;
-      while (IS_COMMENT && size_read < size) {
-          if (buffer[size_read] != '\n') {
-              size_read++;
-          } else {
-              IS_COMMENT = 0;
-              (*linenum)++;
-          }
+      while(size_read < size && IS_COMMENT) {
+        if (buffer[size_read] == '\n') {
+          IS_COMMENT = 0;
+          (*linenum)++;
+        } else {
+          size_read++;
+        }
       }
       return size_read;
-  } else {
-    t = create_token(filename);
-    t->type = TOKEN_SYM_SLASH;
-    t->linenum = *linenum;
-    size_read++;
-  }
+    } else {
+      t = create_token(filename);
+      t->type = TOKEN_SYM_SLASH;
+      t->linenum = *linenum;
+      size_read++;
+    }
   } else if (buffer[size_read] == '=') {  // = and ==
     if (size_read + 1 == size) {
       return size_read;
@@ -358,32 +358,34 @@ size_t SelectToken(char* buffer,
 
     /* YOUR CODE HERE */
     if ((size_read + 2 >= size) || (size_read + 3 >= size) || (size_read + 4 >= size)) {
-        return size_read;
+      return size_read;
     }
-
-    if (buffer[size_read + 2] == '\'' && isprint(buffer[size_read + 1])){
-        t = create_token(filename);
-        t->linenum = *linenum;
-        t->type = TOKEN_CHARACTER;
-        t->data.character = buffer[size_read + 1];
-        size_read += 3;
-    } else if (buffer[size_read + 3] == '\'' && replace_escape_in_character(buffer + size_read + 1) != -1) {
-        int result = replace_escape_in_character(buffer + size_read + 1);
-        t = create_token(filename);
-        t->linenum = *linenum;
-        t->type = TOKEN_CHARACTER;
-        t->data.character = result;
-        size_read += 4;
+    if (isprint(buffer[size_read + 1]) && buffer[size_read + 2] == '\'') {
+      t = create_token(filename);
+      t->linenum = *linenum;
+      t->type = TOKEN_CHARACTER;
+      t->data.character = buffer[size_read + 1];
+      size_read += 3;
+    } else if (replace_escape_in_character(buffer + size_read + 1) != -1 && buffer[size_read + 3] == '\'') {
+      int temp = replace_escape_in_character(buffer + size_read + 1);
+      t = create_token(filename);
+      t->linenum = *linenum;
+      t->type = TOKEN_CHARACTER;
+      t->data.character = temp;
+      size_read += 4;
     } else {
-          int total =
-              generate_character_error(&t, buffer, size_read, size, *linenum, filename);
-          if (total == 0) {
-            return size_read;
-          } else {
-            size_read += total;
-      }
+    /* FIXME IM NOT CORRECT. */
+
+    int total =
+        generate_string_error(&t, buffer, size_read, size, *linenum, filename);
+    if (total == 0) {
+      return size_read;
+    } else {
+      size_read += total;
+    }
   }
-} else if (buffer[size_read] == '"') {  // strings and some errors
+
+  } else if (buffer[size_read] == '"') {  // strings and some errors
     size_t str_len = 1;
     int search = 1;
     while (size_read + str_len < size && search) {
