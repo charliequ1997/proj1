@@ -143,17 +143,27 @@ size_t SelectToken(char* buffer,
     t->type = TOKEN_SYM_TIMES;
     t->linenum = *linenum;
     size_read++;
-  } else if (buffer[size_read] == '/') {  // / and comments
-    if (size_read + 1 == size) {
+  } else if (buffer[size_read] == '/' || IS_COMMENT) {  // / and comments
+    if (size_read + 1 >= size) {
       return size_read;
     }
-    if (0) {
+    if (buffer[size_read + 1] == '/' || IS_COMMENT) {
       /* YOUR CODE HERE*/
+      IS_COMMENT = 1;
+      while(size_read < size && IS_COMMENT) {
+        if (buffer[size_read] == '\n') {
+          IS_COMMENT = 0;
+          (*linenum)++;
+        } else {
+          size_read++;
+        }
+      }
+      return size_read;
     } else {
-      size_read++;
       t = create_token(filename);
-      t->type = TOKEN_SYM_SLASH;
-      t->linenum = *linenum;
+      t -> type = TOKEN_SYM_SLASH;
+      t -> linenum = *linenum;
+      size_read++;
     }
   } else if (buffer[size_read] == '=') {  // = and ==
     if (size_read + 1 == size) {
@@ -347,7 +357,22 @@ size_t SelectToken(char* buffer,
   } else if (buffer[size_read] == '\'') {  // characters and some errors
 
     /* YOUR CODE HERE */
-
+    if ((size_read + 2 >= size) || (size_read + 3 >= size) || (size_read + 4 >= size)) {
+      return size_read;
+    }
+    if (isprint(buffer[size_read + 1]) && buffer[size_read + 2] == '\'') {
+      t = create_token(filename);
+      t -> linenum = *linenum;
+      t -> type = TOKEN_CHARACTER;
+      t -> data.charcter = buffer[size_read + 1];
+      size_read = size_read + 3;
+    } else if (replace_escape_in_character(size_read + buffer + 1) != -1 && buffer[size_read + 3] == '\'') {
+      t = create_token(filename);
+      t -> linenum = *linenum;
+      t -> type = TOKEN_CHARACTER;
+      t -> data.charcter = replace_escape_in_character(size_read + buffer + 1);
+      size_read = size_read + 4;
+    } else {
     /* FIXME IM NOT CORRECT. */
 
     int total =
@@ -357,6 +382,7 @@ size_t SelectToken(char* buffer,
     } else {
       size_read += total;
     }
+  }
 
   } else if (buffer[size_read] == '"') {  // strings and some errors
     size_t str_len = 1;
@@ -422,14 +448,25 @@ size_t SelectToken(char* buffer,
         /* Create an int token. Hint: you may find the function strtol helpful
          */
         /* YOUR CODE HERE */
+        for (int i = 0; i < int_len; i++) {
+          token_contents[i] = buffer[size_read + i];
+        }
+        token_contents[int_len] = '\0';
         /* FIXME IM NOT CORRECT. */
-
-        int total = generate_string_error(&t, buffer, size_read, size, *linenum,
-                                          filename);
-        if (total == 0) {
-          return size_read;
+        if (token_contents[0] == '0' && int_len != 1) {
+          int total = generate_string_error(&t, buffer, size_read, size, *linenum,
+                                            filename);
+          if (total == 0) {
+            return size_read;
+          } else {
+            size_read += total;
+          }
         } else {
-          size_read += total;
+          size_read += int_len;
+          t = create_token(filename);
+          t -> linenum = *linenum;
+          t -> data.integer = strtol(token_contents, NULL, 10);
+          t -> type = TOKEN_INTEGER;
         }
       }
     }
@@ -455,9 +492,17 @@ size_t SelectToken(char* buffer,
           t->linenum = *linenum;
           t->type = type;
           size_read += id_len;
-        } else if (0) {  // FIX ME
+        } else if (is_valid_identifier(token_contents)) {  // FIX ME
           /* Handle identifiers */
           /* YOUR CODE HERE */
+          t = create_token(filename);
+          t -> linenum = *linenum;
+          t -> type = TOKEN_IDENTIFIER;
+          t -> data.identifier = malloc(sizeof(char) * id_len + 1);
+          for (int i = 0; i <= id_len; i++) {
+            t -> data.identifier[i] = token_contents[i];
+          }
+          size_read = size_read + id_len;
         } else {
           /* Errors */
           int total = generate_generic_error(&t, buffer, size_read, size,
@@ -567,4 +612,3 @@ TokenList* TokenFile(char* filename) {
   fclose(f);
   return tokens;
 }
-
